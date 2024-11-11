@@ -4,98 +4,31 @@
     <meta charset="UTF-8">
     <title>Jacob Hoffmann</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Fonts for clean typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- CSS Reset -->
     <style>
-        /* CSS Reset for consistency across browsers */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        /* Body styling */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.6;
-        }
-        /* Navigation styling */
-        header {
-            background-color: #fff;
-            padding: 20px 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        nav {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo h1 {
-            font-weight: 700;
-            font-size: 24px;
-            color: #333;
-        }
-        .menu ul {
-            list-style: none;
-            display: flex;
-        }
-        .menu li {
-            margin-left: 20px;
-        }
-        .menu a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-        .menu a:hover {
-            color: #007BFF;
-        }
-        /* Main content styling */
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        section {
-            margin-bottom: 60px;
-        }
-        h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #007BFF;
-        }
-        p {
-            margin-bottom: 15px;
-        }
-        /* Footer styling */
-        footer {
-            background-color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            color: #777;
-            font-size: 14px;
-            border-top: 1px solid #eaeaea;
-        }
-        /* Responsive Design */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; background-color: #f9f9f9; color: #333; line-height: 1.6; }
+        header { background-color: #fff; padding: 20px 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+        nav { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-weight: 700; font-size: 24px; color: #333; }
+        .menu ul { list-style: none; display: flex; }
+        .menu li { margin-left: 20px; }
+        .menu a { text-decoration: none; color: #333; font-weight: 500; }
+        .menu a:hover { color: #007BFF; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        section { margin-bottom: 60px; }
+        h2 { font-size: 28px; margin-bottom: 20px; color: #007BFF; }
+        p { margin-bottom: 15px; }
+        footer { background-color: #fff; padding: 20px 0; text-align: center; color: #777; font-size: 14px; border-top: 1px solid #eaeaea; }
         @media (max-width: 768px) {
-            .menu ul {
-                flex-direction: column;
-                align-items: center;
-            }
-            .menu li {
-                margin: 10px 0;
-            }
+            .menu ul { flex-direction: column; align-items: center; }
+            .menu li { margin: 10px 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
     <header>
         <nav>
             <div class="logo">
@@ -113,71 +46,77 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
     <div class="container">
-        <!-- About Me Section -->
         <section id="about">
             <h2>About Me</h2>
-            <p>Hello! I'm Jacob Hoffmann, a researcher and student currently based in Denmark. Welcome to my personal website.</p>
+            <p>Welcome! I'm Jacob Hoffmann, a researcher and student specializing in Artificial Intelligence and Machine Learning, with a focus on Deep Learning for Computer Vision and Natural Language Processing.</p>
         </section>
 
-        <!-- Publications Section -->
         <section id="publications">
             <h2>Publications</h2>
             <ul>
                 <li>
-                    <p><strong>Title of Publication</strong></p>
-                    <p>Published in <em>Journal Name</em>, 2023</p>
+                    <p><strong>Research Paper on Large Language Models</strong> - Accepted as Poster Abstract at AST 2024</p>
                     <p><a href="https://dl.acm.org/doi/abs/10.1145/3644032.3644454" target="_blank">View Publication</a></p>
                 </li>
-                <!-- Add more publications as needed -->
             </ul>
         </section>
 
-        <!-- Work History Section -->
         <section id="work">
             <h2>Work History</h2>
             <ul>
                 <li>
-                    <p><strong>Research Assistant</strong> at University of Copenhagen</p>
-                    <p>June 2022 - Present</p>
-                    <p>Working on data analysis and machine learning projects.</p>
+                    <p><strong>Research Assistant</strong> - Institute of Applied Informatics and Formal Description Methods, KIT</p>
+                    <p>Oct 2023 – Present</p>
+                    <p>Co-authored research on Large Language Models, applied reinforcement learning with human feedback.</p>
                 </li>
-                <!-- Add more work experiences as needed -->
+                <li>
+                    <p><strong>Working Student</strong> - E-Commerce & Online Marketplace Management, Naturana International</p>
+                    <p>Jul 2021 – Jun 2022</p>
+                    <p>Launched Naturana on Zalando, boosting online sales, managed e-commerce strategy for Shopify and Amazon.</p>
+                </li>
+                <li>
+                    <p><strong>Intern</strong> - Product Management & App Development, OUTLETCITY AG</p>
+                    <p>Oct 2020</p>
+                    <p>Developed omnichannel shopping app, analyzed app data using Google Firebase, employed Scrum methodologies.</p>
+                </li>
             </ul>
         </section>
 
-        <!-- Education Section -->
         <section id="education">
             <h2>Education</h2>
             <ul>
                 <li>
-                    <p><strong>MSc in Computer Science</strong></p>
-                    <p>University of Copenhagen, 2021 - Present</p>
+                    <p><strong>M.Sc. in Information Systems</strong> - Karlsruhe Institute of Technology (KIT)</p>
+                    <p>2023 – Present</p>
+                    <p>Specializing in Deep Learning for Computer Vision and NLP, with coursework in Data Science, Statistics, and ML.</p>
                 </li>
                 <li>
-                    <p><strong>BSc in Computer Science</strong></p>
-                    <p>Aarhus University, 2018 - 2021</p>
+                    <p><strong>B.Sc. in Industrial Engineering and Management</strong> - Karlsruhe Institute of Technology (KIT)</p>
+                    <p>2019 – 2023 | Grade: 1.6</p>
+                    <p>Bachelor’s thesis on "Generating Software Tests for Mobile Applications Using Transformer Networks."</p>
                 </li>
-                <!-- Add more education details as needed -->
+                <li>
+                    <p><strong>General Qualification for University Entrance</strong> - Markgrafen Gymnasium</p>
+                    <p>2011 – 2019 | Grade: 1.5</p>
+                    <p>Advanced courses in Mathematics, Economics, and Chemistry, top results in Economics exam on “The New Silk Road.”</p>
+                </li>
             </ul>
         </section>
 
-        <!-- Languages Section -->
         <section id="languages">
             <h2>Languages</h2>
             <ul>
-                <li>Danish - Native</li>
-                <li>English - Fluent</li>
-                <li>German - Intermediate</li>
-                <!-- Add more languages as needed -->
+                <li>German - Native</li>
+                <li>English - C1 Level</li>
+                <li>Danish - A1 Level</li>
+                <li>Latin - Latinum Certification</li>
             </ul>
         </section>
     </div>
 
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2023 Jacob Hoffmann. All rights reserved.</p>
+        <p>&copy; 2024 Jacob Hoffmann. All rights reserved.</p>
     </footer>
 
 </body>
