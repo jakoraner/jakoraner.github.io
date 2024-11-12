@@ -4,7 +4,6 @@ import About from './components/About';
 import Publications from './components/Publications';
 import WorkHistory from './components/WorkHistory';
 import Education from './components/Education';
-import Skills from './components/Skills';
 import Languages from './components/Languages';
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
         <Publications />
         <WorkHistory />
         <Education />
-        <Skills />
         <Languages />
       </main>
       <footer className="text-center py-4 bg-white border-t">
