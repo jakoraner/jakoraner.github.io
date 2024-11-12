@@ -12,7 +12,7 @@ const Publications = () => {
         <a href="https://doi.org/10.1145/3644032.3644454" target="_blank" rel="noopener noreferrer" className="text-teal-500 hover:underline">
           Read Publication
         </a>
-        <p>Total Citations: <strong>250</strong> (from <a href="https://scholar.google.com/citations?user=fEXMoLIAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-teal-500 hover:underline">Google Scholar</a>)</p>
+        <p>Total Citations: <strong>1</strong> (from <a href="https://scholar.google.com/citations?user=fEXMoLIAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-teal-500 hover:underline">Google Scholar</a>)</p>
       </div>
     </section>
   );
