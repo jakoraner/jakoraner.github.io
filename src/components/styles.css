@@ -1,21 +1,21 @@
 /* src/styles.css */
 .name-text {
-    color: #1E3A8A; /* Customize your color */
+  color: #4A4A4A; /* Dark aesthetic grey */
+}
+
+.about-text, .text-gray-600 {
+  color: #6B7280; /* Softer grey for text */
+}
+
+.profile-image-container {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  .about-text {
-    color: #4A5568; /* Customize your color */
+  50% {
+    transform: translateY(-10px);
   }
-  
-  .profile-image-container {
-    animation: float 4s ease-in-out infinite;
-  }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
+}
