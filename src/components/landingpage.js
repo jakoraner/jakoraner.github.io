@@ -1,4 +1,3 @@
-// src/components/LandingPage.js
 import React from 'react';
 import { Menu } from 'lucide-react';
 import profileImage from '../assets/images/IMG_1671-3.jpg'; // Import the image
@@ -28,7 +27,6 @@ const LandingPage = () => {
           </div>
         </div>
       </nav>
-
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-16">
@@ -98,13 +96,20 @@ const LandingPage = () => {
           <h2 className="text-3xl font-bold text-gray-800 mb-4">Education</h2>
           <ul className="text-gray-600">
             <li>
-              <p><strong>M.Sc. in Information Systems</strong> - Karlsruhe Institute of Technology (2023 – Present)</p>
+              <p><strong>M.Sc. in Human-Centered AI</strong> - Technical University of Denmark (DTU) (2024 – Present)</p>
+              <ul className="list-disc list-inside ml-4 mt-2">
+                <li>Focusing on Machine Learning, Cognitive Science, and Computer Vision</li>
+                <li>Comprehensive studies in Deep Learning, NLP, and Data Science</li>
+                <li>Research Assistant at KIT, applying theoretical AI knowledge to real-world problems</li>
+              </ul>
             </li>
             <li>
-              <p><strong>B.Sc. in Industrial Engineering and Management</strong> - KIT (2019 – 2023 | Grade: 1.6)</p>
-            </li>
-            <li>
-              <p><strong>General Qualification for University Entrance</strong> - Markgrafen Gymnasium (2011 – 2019 | Grade: 1.5)</p>
+              <p><strong>B.Sc. in Industrial Engineering and Management</strong> - KIT (2019 – 2023)</p>
+              <ul className="list-disc list-inside ml-4 mt-2">
+                <li>Bachelor’s thesis on “Generating Software Tests for Mobile Applications Using Transformer Networks”</li>
+                <li>Seminar on AI in Robotic Systems, focusing on practical applications</li>
+                <li>Specialization in AI, Machine Learning, and Applied Computer Science</li>
+              </ul>
             </li>
           </ul>
         </section>
