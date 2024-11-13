@@ -55,7 +55,8 @@ const LandingPage = () => {
         <section id="about" className="prose prose-lg max-w-none mb-12">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">About Me</h2>
           <p className="text-xl leading-relaxed text-gray-600">
-            I’m Jacob Hoffmann, a researcher and student specializing in Artificial Intelligence and Machine Learning, with a focus on Deep Learning for Computer Vision and Natural Language Processing.
+          I'm Jacob, a researcher and student specializing in artificial intelligence and machine learning, with a focus on the training of large language models. 
+          I am currently pursuing a master's degree in Human-Centered AI at the Technical University of Denmark.
           </p>
         </section>
 
@@ -76,17 +77,29 @@ const LandingPage = () => {
         <section id="work-history" className="prose prose-lg max-w-none mb-12">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">Work History</h2>
           <ul className="text-gray-600">
-            <li>
-              <p><strong>Research Assistant</strong> - KIT (Oct 2023 – Present)</p>
-              <p>Co-authored research on Large Language Models, applied reinforcement learning with human feedback.</p>
+            <li className="mb-6">
+              <p><strong>Research Assistant</strong> - Karlsruhe Institute of Technology (KIT), Institute AIFB (Oct 2023 – Present)</p>
+              <ul className="list-disc list-inside ml-4">
+                <li>Co-authored and presented the paper “Generating Software Tests for Mobile Applications Using Fine-Tuned Large Language Models” as a Poster Abstract at ACM/IEEE’s AST 2024 in Lisbon</li>
+                <li>Independently led a project focused on creating synthetic datasets, utilizing large language models for data filtering and enhancement, contributing to improved fine-tuning techniques</li>
+                <li>Played a key role in the development and optimization of the research group’s in-house LLM API</li>
+                <li>Authored an upcoming article for SIGS Datacom’s German Testing Magazine</li>
+              </ul>
             </li>
-            <li>
-              <p><strong>Working Student</strong> - Naturana International (Jul 2021 – Jun 2022)</p>
-              <p>Launched Naturana on Zalando, boosting online sales, managed e-commerce strategy for Shopify and Amazon.</p>
+            <li className="mb-6">
+              <p><strong>Working Student</strong> - Naturana International, Stuttgart, Germany (Jul 2021 – Jun 2022)</p>
+              <ul className="list-disc list-inside ml-4">
+                <li>Led the technical launch of the Naturana brand on Zalando</li>
+                <li>Boosted online sales, achieving 25% of total online sales on Zalando through data-driven strategies</li>
+                <li>Managed e-commerce strategies on the Shopify and Amazon platforms, implementing data analytics for performance tracking</li>
+              </ul>
             </li>
-            <li>
-              <p><strong>Intern</strong> - OUTLETCITY AG (Oct 2020)</p>
-              <p>Developed omnichannel shopping app, analyzed app data using Google Firebase, employed Scrum methodologies.</p>
+            <li className="mb-6">
+              <p><strong>Intern</strong> - OUTLETCITY AG, Metzingen, Germany (Oct 2020)</p>
+              <ul className="list-disc list-inside ml-4">
+                <li>Developed Outletcity Metzingen's omnichannel shopping app using Kotlin, enhancing the customer retail experience</li>
+                <li>Conducted user data analysis via Google Firebase and worked on product management tasks in an agile setting using Scrum and Jira</li>
+              </ul>
             </li>
           </ul>
         </section>
@@ -120,6 +133,7 @@ const LandingPage = () => {
           <ul className="text-gray-600">
             <li>German - Native</li>
             <li>English - C1 Level</li>
+            <li>Danish - A1 Level</li>
             <li>Latin - Latinum Certification</li>
           </ul>
         </section>
