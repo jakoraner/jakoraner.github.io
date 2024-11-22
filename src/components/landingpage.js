@@ -1,33 +1,12 @@
 import React from 'react';
-import { Menu } from 'lucide-react';
 import profileImage from '../assets/images/IMG_1671-3.jpg'; // Import the image
 import './styles.css';
+import Navbar from './Navbar'; 
 
 const LandingPage = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
   return (
-    <div className="min-h-screen bg-gray-100"> {/* Light grey background */}
-      {/* Navigation Bar */}
-      <nav className="bg-white shadow-md">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-700">Jacob Hoffmann</h1> {/* Aesthetic grey */}
-          <button
-            className="md:hidden text-gray-500"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <Menu size={24} />
-          </button>
-          <div className={`${isMenuOpen ? "block" : "hidden"} md:flex space-x-6`}>
-            <a href="#about" className="text-gray-600 hover:text-gray-800">About Me</a>
-            <a href="#publications" className="text-gray-600 hover:text-gray-800">Publications</a>
-            <a href="#work-history" className="text-gray-600 hover:text-gray-800">Work History</a>
-            <a href="#education" className="text-gray-600 hover:text-gray-800">Education</a>
-            <a href="#languages" className="text-gray-600 hover:text-gray-800">Languages</a>
-            <a href="#spotify-playlists" className="text-gray-600 hover:text-gray-800">Spotify Playlists</a>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gray-100">
+      <Navbar />
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-16">

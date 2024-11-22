@@ -1,12 +1,16 @@
 /* src/styles.css */
+
+/* General Text Styles */
 .name-text {
   color: #4A4A4A; /* Dark aesthetic grey */
 }
 
-.about-text, .text-gray-600 {
+.about-text,
+.text-gray-600 {
   color: #6B7280; /* Softer grey for text */
 }
 
+/* Profile Image Styles */
 .profile-image-container {
   animation: float 4s ease-in-out infinite;
 }
@@ -18,4 +22,98 @@
   50% {
     transform: translateY(-10px);
   }
+}
+
+.disable-download img {
+  pointer-events: none;
+}
+
+/* Spinner Animation */
+@-webkit-keyframes rotate-forever {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-forever {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.lightbox-spinner {
+  animation-duration: 0.7s;
+  animation-iteration-count: infinite;
+  animation-name: rotate-forever;
+  animation-timing-function: linear;
+  height: 30px;
+  width: 30px;
+  border: 4px solid #fff;
+  border-right-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.7;
+}
+
+/* Link Transition */
+.link-transition a {
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.link-transition a:hover {
+  color: #2563eb; /* Blue hover effect */
+}
+
+.link-transition a svg {
+  transition: fill 0.2s ease;
+}
+
+/* Project Cover Details */
+.project-cover .details {
+  transition: background 0.2s ease;
+}
+
+.project-cover .title,
+.project-cover .fields,
+.project-cover .custom,
+.project-cover .description,
+.project-cover .date {
+  transition: color 0.2s ease;
+}
+
+/* Fade-In and Fade-Out Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.transition-enabled {
+  opacity: 0;
+}
+
+.transition-in {
+  animation: fade-in 0.25s ease-in forwards;
+}
+
+.transition-out {
+  animation: fade-out 0.25s ease-out forwards;
 }
