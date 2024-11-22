@@ -24,6 +24,7 @@ const LandingPage = () => {
             <a href="#work-history" className="text-gray-600 hover:text-gray-800">Work History</a>
             <a href="#education" className="text-gray-600 hover:text-gray-800">Education</a>
             <a href="#languages" className="text-gray-600 hover:text-gray-800">Languages</a>
+            <a href="#spotify-playlists" className="text-gray-600 hover:text-gray-800">Spotify Playlists</a>
           </div>
         </div>
       </nav>
@@ -137,6 +138,8 @@ const LandingPage = () => {
             <li>Latin - Latinum Certification</li>
           </ul>
         </section>
+
+        
       </main>
     </div>
   );
