@@ -1,14 +1,20 @@
+// App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LandingPage from './components/Landingpage'; // Adjust based on your structure
-import Playlists from './components/Playlists'; // Adjust based on your structure
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './components/Landingpage';
+import Playlists from './components/Playlists';
+import Blog from './components/Blog';
+import ScrollToHash from './components/ScrollToHash';
+import './app.css';
 
 const App = () => {
   return (
     <Router>
+      <ScrollToHash />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/playlists" element={<Playlists />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
     </Router>
   );

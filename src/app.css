@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global Font Setting */
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 /* App Base Styles */
 .App {
   text-align: center;
@@ -31,12 +36,14 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  font-family: "Arial Greek", Arial, sans-serif; /* Ensures header uses the specified font */
 }
 
 /* Links Styling */
 .App-link {
   color: #61dafb;
   transition: color 0.2s ease;
+  font-family: "Arial Greek", Arial, sans-serif;
 }
 
 .App-link:hover {
