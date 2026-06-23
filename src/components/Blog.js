@@ -1,4 +1,3 @@
-// src/components/Blog.js
 import React, { useState } from 'react';
 
 const Blog = () => {
@@ -87,6 +86,5 @@ const Blog = () => {
     </div>
   );
 };
-
 
 export default Blog;
