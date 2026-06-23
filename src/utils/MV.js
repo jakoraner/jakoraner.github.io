@@ -14,14 +14,30 @@
  * @returns {mat4} A new 4x4 matrix initialized to the identity matrix.
  */
 export function mat4() {
-    var out = new Array(4);
-    for (var i = 0; i < 4; ++i) {
-        out[i] = new Array(4);
+    var out;
+
+    // mat4(rowVec4, rowVec4, rowVec4, rowVec4): build from four row vectors.
+    if (arguments.length === 4 && Array.isArray(arguments[0])) {
+        out = [
+            arguments[0].slice(),
+            arguments[1].slice(),
+            arguments[2].slice(),
+            arguments[3].slice(),
+        ];
+    } else {
+        // Identity (or scalar diagonal if a single number is given).
+        var d = (arguments.length === 1 && typeof arguments[0] === "number")
+            ? arguments[0] : 1.0;
+        out = [
+            [d, 0, 0, 0],
+            [0, d, 0, 0],
+            [0, 0, d, 0],
+            [0, 0, 0, d],
+        ];
     }
 
-    out[0][0] = out[1][1] = out[2][2] = out[3][3] = 1.0;
-    out[0][1] = out[0][2] = out[0][3] = out[1][0] = out[1][2] = out[1][3] = out[2][0] = out[2][1] = out[2][3] = out[3][0] = out[3][1] = out[3][2] = 0.0;
-
+    // Tag so flatten() transposes to column-major for WebGL.
+    out.matrix = true;
     return out;
 }
 
@@ -92,7 +108,7 @@ export function rotate(angle, axis) {
         vec4(x * x * omc + c, x * y * omc - z * s, x * z * omc + y * s, 0.0),
         vec4(x * y * omc + z * s, y * y * omc + c, y * z * omc - x * s, 0.0),
         vec4(x * z * omc - y * s, y * z * omc + x * s, z * z * omc + c, 0.0),
-        vec4()
+        vec4(0.0, 0.0, 0.0, 1.0)
     );
 
     return result;
