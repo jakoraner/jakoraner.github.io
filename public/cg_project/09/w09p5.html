@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W09P5 - Comparing Projection Shadows and Shadow Mapping</title>
+</head>
+<body>
+    <h1>Comparison of Projection Shadows and Shadow Mapping</h1>
+
+    <h2>Introduction</h2>
+    <p>
+        In computer graphics, rendering realistic shadows enhances the depth and realism of a scene.
+        Two common techniques for generating shadows are <strong>projection shadows</strong> and <strong>shadow mapping</strong>.
+        In this document, I will compare these two methods by discussing their advantages and disadvantages, and provide code examples to illustrate how they are implemented.
+    </p>
+
+    <h2>Projection Shadows</h2>
+    <p>
+        Projection shadows involve projecting the silhouette of an object onto a surface from the light's perspective.
+        This technique is relatively straightforward and involves transforming the object's geometry to create a shadow on a receiver surface, such as the ground.
+    </p>
+
+    <h3>Advantages of Projection Shadows</h3>
+    <ul>
+        <li><strong>Simple Implementation:</strong> The mathematics behind projection shadows are straightforward, involving basic matrix transformations.</li>
+        <li><strong>Performance Efficiency:</strong> Since it doesn't require additional rendering passes or complex calculations, it's computationally less intensive.</li>
+    </ul>
+
+    <h3>Disadvantages of Projection Shadows</h3>
+    <ul>
+        <li><strong>Limited to Planar Surfaces:</strong> Projection shadows work best on flat surfaces. Projecting onto arbitrary or curved surfaces is more complex.</li>
+        <li><strong>No Self-Shadowing:</strong> Objects cannot cast shadows onto themselves or onto other objects, reducing realism.</li>
+        <li><strong>Single Light Source:</strong> Extending this technique to multiple light sources can be cumbersome.</li>
+    </ul>
+
+    <h3>Code Example</h3>
+    <p>
+        Below is a snippet from the projection shadow implementation. It shows how to compute the shadow matrix and apply it to the object's model matrix.
+    </p>
+    <pre><code>
+// Compute the shadow projection matrix onto the ground plane
+var groundY = -1.0; // y-coordinate of the ground plane
+var epsilon = 0.001; // Small offset to prevent z-fighting
+var yPlane = groundY + epsilon;
+
+// Light position
+var lightPosition = vec3(lightX, lightY, lightZ);
+
+// Distance from light to the plane
+var d = -(lightPosition[1] - yPlane);
+
+// Translation matrices
+var T_light = translate(lightPosition[0], lightPosition[1], lightPosition[2]);
+var T_neg_light = translate(-lightPosition[0], -lightPosition[1], -lightPosition[2]);
+
+// Projection matrix onto y = yPlane
+var P_proj = mat4();
+P_proj[3][1] = 1 / d;
+P_proj[3][3] = 0;
+
+// Shadow matrix
+var shadowMat = mult(T_light, mult(P_proj, T_neg_light));
+
+// Apply the shadow matrix to the object's model matrix
+var modelViewMatrixShadow = mult(viewMatrix, mult(shadowMat, modelMatrixTeapot));
+    </code></pre>
+
+    <h2>Shadow Mapping</h2>
+    <p>
+        Shadow mapping is a more advanced technique that uses depth textures to determine whether a fragment is in shadow.
+        It involves rendering the scene from the light's point of view to create a shadow map (depth texture) and then using this map during the final rendering pass to apply shadows.
+    </p>
+
+    <h3>Advantages of Shadow Mapping</h3>
+    <ul>
+        <li><strong>Supports Complex Geometries:</strong> Works well with arbitrary surfaces, including curved and uneven terrain.</li>
+        <li><strong>Self-Shadowing:</strong> Objects can cast shadows onto themselves and onto other objects, increasing realism.</li>
+        <li><strong>Multiple Light Sources:</strong> Can handle multiple lights by generating separate shadow maps for each.</li>
+    </ul>
+
+    <h3>Disadvantages of Shadow Mapping</h3>
+    <ul>
+        <li><strong>Implementation Complexity:</strong> Requires multiple rendering passes and careful handling of coordinate transformations.</li>
+        <li><strong>Artifacts Due to Precision:</strong> Limited depth buffer precision can cause issues like shadow acne or Peter Panning.</li>
+        <li><strong>Performance Overhead:</strong> Generating and sampling shadow maps can be computationally intensive.</li>
+    </ul>
+
+    <h3>Code Example</h3>
+    <p>
+        Here's a fragment shader snippet that demonstrates how to use the shadow map to determine shadow visibility:
+    </p>
+    <pre><code>
+precision mediump float;
+varying vec4 v_PositionFromLight;
+uniform sampler2D u_ShadowMap;
+
+void main() {
+    // Transform the fragment position into shadow map coordinates
+    vec3 shadowCoord = v_PositionFromLight.xyz / v_PositionFromLight.w;
+    shadowCoord = shadowCoord * 0.5 + 0.5;
+
+    float visibility = 1.0;
+
+    // Check if the fragment is within the shadow map bounds
+    if (shadowCoord.x &gt;= 0.0 &amp;&amp; shadowCoord.x &lt;= 1.0 &amp;&amp;
+        shadowCoord.y &gt;= 0.0 &amp;&amp; shadowCoord.y &lt;= 1.0) {
+
+        // Get the depth from the shadow map
+        float depthFromShadowMap = texture2D(u_ShadowMap, shadowCoord.xy).r;
+        float depth = shadowCoord.z;
+
+        // Apply a bias to prevent shadow acne
+        if (depth &gt; depthFromShadowMap + 0.005) {
+            visibility = 0.5; // Fragment is in shadow
+        }
+    }
+
+    // Use the visibility factor in lighting calculations
+    // ...
+}
+    </code></pre>
+
+    <h2>Comparison Summary</h2>
+    <p>
+        The table below summarizes the key differences between projection shadows and shadow mapping:
+    </p>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Feature</th>
+            <th>Projection Shadows</th>
+            <th>Shadow Mapping</th>
+        </tr>
+        <tr>
+            <td>Surface Compatibility</td>
+            <td>Best with flat surfaces</td>
+            <td>Works with complex geometries</td>
+        </tr>
+        <tr>
+            <td>Self-Shadowing</td>
+            <td>Not supported</td>
+            <td>Supported</td>
+        </tr>
+        <tr>
+            <td>Implementation Complexity</td>
+            <td>Simple</td>
+            <td>Complex</td>
+        </tr>
+        <tr>
+            <td>Performance</td>
+            <td>High (less computational load)</td>
+            <td>Lower (more computational load)</td>
+        </tr>
+        <tr>
+            <td>Multiple Light Sources</td>
+            <td>Difficult to extend</td>
+            <td>More scalable</td>
+        </tr>
+        <tr>
+            <td>Shadow Quality</td>
+            <td>Sharp and accurate on planes</td>
+            <td>Depends on shadow map resolution</td>
+        </tr>
+        <tr>
+            <td>Artifacts</td>
+            <td>Minimal</td>
+            <td>Possible due to depth precision</td>
+        </tr>
+    </table>
+
+    <h2>Conclusion</h2>
+    <p>
+        Projection shadows are a quick and efficient method for adding shadows to scenes with flat surfaces and a single light source.
+        They are easy to implement but lack flexibility and realism in complex environments.
+        On the other hand, shadow mapping offers greater realism by supporting self-shadowing and complex geometries.
+        Although it is more complex and computationally intensive, shadow mapping is essential for modern graphics applications where realistic lighting is crucial.
+        Understanding these techniques allows us to choose the appropriate method based on the needs of the application and the available resources.
+    </p>
+</body>
+</html>

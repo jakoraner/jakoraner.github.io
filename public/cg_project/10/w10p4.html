@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W09P2 - Teapot and Textured Ground</title>
+    <!-- Include Angel's WebGL utility scripts -->
+    <script src="../angelCommon/webgl-utils.js"></script>
+    <script src="../angelCommon/initShaders.js"></script>
+    <script src="../angelCommon/MV.js"></script>
+    <!-- Include the OBJ parser -->
+    <script src="../OBJParser.js"></script>
+    <!-- Include the Quaternion library -->
+    <script src="../resources/quaternion.js"></script>
+
+    <!-- Ground Vertex Shader -->
+    <script id="vertex-shader-ground" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute vec2 a_TexCoord;
+        varying vec2 v_TexCoord;
+
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+
+        void main() {
+            gl_Position = projectionMatrix * modelViewMatrix * a_Position;
+            v_TexCoord = a_TexCoord;
+        }
+    </script>
+
+    <!-- Ground Fragment Shader -->
+    <script id="fragment-shader-ground" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec2 v_TexCoord;
+        uniform sampler2D u_Sampler;
+
+        void main() {
+            gl_FragColor = texture2D(u_Sampler, v_TexCoord);
+        }
+    </script>
+
+    <!-- Vertex Shader for Teapot -->
+    <script id="vertex-shader-teapot" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute vec4 a_Normal;
+        attribute vec4 a_Color;
+
+        uniform mat4 u_ModelMatrix;
+        uniform mat4 u_ViewMatrix;
+        uniform mat4 u_ProjectionMatrix;
+        uniform mat4 u_NormalMatrix;
+
+        varying vec3 v_Normal;
+        varying vec3 v_Position;
+        varying vec4 v_Color;
+
+        void main() {
+            gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+            v_Position = vec3(u_ModelMatrix * a_Position);
+            v_Normal = normalize(vec3(u_NormalMatrix * a_Normal));
+            v_Color = a_Color;
+        }
+    </script>
+
+    <!-- Fragment Shader for Teapot -->
+    <script id="fragment-shader-teapot" type="x-shader/x-fragment">
+        precision mediump float;
+
+        varying vec3 v_Normal;
+        varying vec3 v_Position;
+        varying vec4 v_Color;
+
+        uniform vec3 u_LightPosition;
+        uniform vec3 u_LightColor;
+        uniform vec3 u_AmbientLight;
+
+        uniform vec3 u_SpecularColor; // Specular color of the material
+        uniform float u_Shininess;    // Shininess coefficient
+
+        void main() {
+            // Normalize the normal vector
+            vec3 normal = normalize(v_Normal);
+
+            // Compute the light direction vector
+            vec3 lightDirection = normalize(u_LightPosition - v_Position);
+
+            // Compute the view direction vector (assuming the camera is at the origin)
+            vec3 viewDirection = normalize(-v_Position);
+
+            // Compute the reflection direction vector
+            vec3 reflectionDirection = reflect(-lightDirection, normal);
+
+            // Compute ambient reflection
+            vec3 ambient = u_AmbientLight * v_Color.rgb;
+
+            // Compute diffuse reflection
+            float diff = max(dot(normal, lightDirection), 0.0);
+            vec3 diffuse = u_LightColor * diff * v_Color.rgb;
+
+            // Compute specular reflection
+            float spec = 0.0;
+            if(diff > 0.0)
+                spec = pow(max(dot(reflectionDirection, viewDirection), 0.0), u_Shininess);
+            vec3 specular = u_LightColor * spec * u_SpecularColor;
+
+            // Sum all components
+            vec3 finalColor = ambient + diffuse + specular;
+
+            gl_FragColor = vec4(finalColor, v_Color.a);
+        }
+    </script>
+
+    <!-- Vertex Shader for Shadow -->
+    <script id="vertex-shader-shadow" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+
+        uniform mat4 u_ModelViewMatrix;
+        uniform mat4 u_ProjectionMatrix;
+
+        void main() {
+            gl_Position = u_ProjectionMatrix * u_ModelViewMatrix * a_Position;
+        }
+    </script>
+
+    <!-- Fragment Shader for Shadow -->
+    <script id="fragment-shader-shadow" type="x-shader/x-fragment">
+        precision mediump float;
+
+        void main() {
+            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0); // Semi-transparent black
+        }
+    </script>
+
+    <!-- Include your custom script -->
+    <script type="text/javascript" src="w10p4.js"></script>
+</head>
+<body>
+    <canvas id="gl" width="512" height="512">
+        Your browser doesn't support the HTML5 <code>&lt;canvas&gt;</code> element.
+    </canvas>
+    <br>
+    <button id="toggle-light">Toggle Light Circulation</button>
+    <button id="toggle-motion">Stop Teapot Motion</button>
+    <label for="interaction-mode">Interaction Mode:</label>
+    <select id="interaction-mode">
+        <option value="orbit">Orbit</option>
+        <option value="dolly">Dolly</option>
+        <option value="pan">Pan</option>
+        <option value="spinning">Spinning</option>
+    </select>
+</body>
+</html>

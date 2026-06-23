@@ -1,0 +1,45 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W06P1</title>
+    <!-- Include Angel's WebGL utility scripts -->
+    <script src="../angelCommon/webgl-utils.js"></script>
+    <script src="../angelCommon/initShaders.js"></script>
+    <script src="../angelCommon/MV.js"></script>
+
+    <!-- Vertex Shader -->
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 vPosition;
+        attribute vec2 vTexCoord;
+        varying vec2 fTexCoord;
+
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+
+        void main() {
+            gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+            fTexCoord = vTexCoord;
+        }
+    </script>
+
+    <!-- Fragment Shader -->
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec2 fTexCoord;
+        uniform sampler2D texture;
+
+        void main() {
+            gl_FragColor = texture2D(texture, fTexCoord);
+        }
+    </script>
+
+    <!-- Include your custom script -->
+    <script type="text/javascript" src="w06p1.js"></script> 
+</head>
+<body> 
+    <canvas id="gl" width="512" height="512">
+        Your browser doesn't support the HTML5 <code>&lt;canvas&gt;</code> element.
+    </canvas> 
+</body>
+</html>

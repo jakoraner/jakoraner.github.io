@@ -1,11 +1,7 @@
 // Work.js
 import React, { useState } from "react";
 import Navbar from "./Navbar";
-import W01P1 from "./cg_project/01/w01p1";
-import W01P2 from "./cg_project/01/w01p2";
-import W01P3 from "./cg_project/01/w01p3";
-import W01P4 from "./cg_project/01/w01p4";
-import W01P5 from "./cg_project/01/w01p5";
+import ComputerGraphics from "./cg_project/ComputerGraphics";
 
 const Work = () => {
   const [activeProject, setActiveProject] = useState(null);
@@ -13,44 +9,9 @@ const Work = () => {
   const projects = [
     {
       name: "Computer Graphics",
-      description:
-        "This project explores fundamental concepts in computer graphics using WebGL.",
-      previewImage: "/assets/images/placeholder.png", // Update with your actual preview image
-      content: (
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">Worksheet 01</h2>
-          <p className="text-gray-700 mb-4">
-            This project explores fundamental concepts in computer graphics using WebGL.
-            It covers topics such as setting up a WebGL context, loading and compiling shaders,
-            handling vertex buffers, and animating simple shapes.
-          </p>
-          {/* First Exercise: Basic WebGL Setup */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold mb-2">
-              Exercise 1: Basic WebGL Setup
-            </h3>
-            <p className="text-gray-700 mb-2">
-              This exercise demonstrates setting up a basic WebGL context and clearing the canvas
-              with a specific color (cornflower blue).
-            </p>
-            <W01P1 />
-            <p className="text-gray-700 mt-2">
-              <strong>Code Explanation:</strong>
-            </p>
-            <ul className="list-disc list-inside text-gray-700">
-              <li>We obtain the canvas element and initialize the WebGL context.</li>
-              <li>The viewport is configured to match the canvas dimensions.</li>
-              <li>
-                The <code>gl.clearColor</code> function sets the background color.
-              </li>
-              <li>
-                <code>gl.clear(gl.COLOR_BUFFER_BIT)</code> clears the canvas with the specified color.
-              </li>
-            </ul>
-          </div>
-          {/* Additional exercises omitted for brevity */}
-        </div>
-      ),
+      description: "Interactive WebGL exercises — pipeline, models, texturing, lighting & shadows.",
+      gradient: "from-slate-600 via-slate-800 to-slate-900",
+      content: <ComputerGraphics />,
     },
     {
       name: "Arty App",
@@ -65,6 +26,7 @@ const Work = () => {
           </p>
           <div className="overflow-hidden mb-8">
             <iframe
+              title="Arty App Figma prototype"
               style={{ border: "1px solid rgba(0, 0, 0, 0.1)" }}
               width="800"
               height="450"
@@ -75,6 +37,7 @@ const Work = () => {
           <div className="overflow-hidden">
             <h3 className="text-xl font-semibold mb-2">Arty App Report</h3>
             <iframe
+              title="Arty App report"
               style={{ border: "1px solid rgba(0, 0, 0, 0.1)" }}
               width="800"
               height="600"
@@ -84,13 +47,6 @@ const Work = () => {
         </div>
       ),
     },
-    {
-      name: "Placeholder Project",
-      description: "More project content will go here.",
-      previewImage: "/assets/images/placeholder.png",
-      content: <div>More project content will go here.</div>,
-    },
-    // Add more projects here in the future
   ];
 
   return (
@@ -110,11 +66,17 @@ const Work = () => {
             >
               {/* Preview container with fixed dimensions */}
               <div className="relative w-[400px] h-[200px] mx-auto">
-                {project.previewImage && (
+                {project.previewImage ? (
                   <img
                     src={project.previewImage}
                     alt={project.name}
                     className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div
+                    className={`w-full h-full bg-gradient-to-br ${
+                      project.gradient || "from-gray-600 to-gray-900"
+                    }`}
                   />
                 )}
                 {/* Overlay with title and subtext in lower left */}
@@ -122,9 +84,7 @@ const Work = () => {
                   <h2 className="text-xl font-semibold text-white">
                     {project.name}
                   </h2>
-                  <p className="text-sm text-gray-300">
-                    {project.description}
-                  </p>
+                  <p className="text-sm text-gray-300">{project.description}</p>
                 </div>
               </div>
             </div>
@@ -138,28 +98,29 @@ const Work = () => {
           className="fixed inset-0 bg-white z-50 overflow-y-auto"
           onClick={() => setActiveProject(null)}
         >
-          <div className="p-10">
-            {/* Close button */}
-            <button
-              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
-              onClick={() => setActiveProject(null)}
+          {/* Close button (stays fixed in the corner) */}
+          <button
+            className="fixed top-4 right-4 z-10 text-gray-600 hover:text-gray-900 bg-white/80 rounded-full p-1"
+            onClick={() => setActiveProject(null)}
+            aria-label="Close project"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            {/* Project content */}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          {/* Project content — stop clicks here from closing the overlay */}
+          <div className="p-6 sm:p-10" onClick={(e) => e.stopPropagation()}>
             <div className="max-w-6xl mx-auto">
               {projects[activeProject].content}
             </div>
