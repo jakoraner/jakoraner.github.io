@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/Landingpage';
 import Playlists from './components/Playlists';
 import Work from './components/Work';
+import LauraTimeline from './components/Laura/LauraTimeline';
 import ScrollToHash from './components/ScrollToHash';
 import './app.css';
 
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/playlists" element={<Playlists />} />
         <Route path="/work" element={<Work />} />
+        <Route path="/laura" element={<LauraTimeline />} />
       </Routes>
     </Router>
   );

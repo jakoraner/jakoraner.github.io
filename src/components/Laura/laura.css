@@ -1,0 +1,105 @@
+/*
+ * Laura — Interactive Relationship Timeline
+ * @keyframes + pseudo-element / pseudo-class bits that Tailwind and React
+ * inline styles can't express. Everything else lives in LauraTimeline.js.
+ * Keyframe definitions are copied verbatim from the design handoff.
+ */
+
+@keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+
+@keyframes crtOff {
+  0%   { transform: scale(1, 1);        filter: brightness(1);   opacity: 1 }
+  55%  { transform: scale(1.04, .012);  filter: brightness(3.2); opacity: 1 }
+  100% { transform: scale(.001, .0006); filter: brightness(9);   opacity: .4 }
+}
+
+@keyframes letterDrop {
+  0%   { transform: translateY(-130%); opacity: 0 }
+  55%  { transform: translateY(14%);   opacity: 1 }
+  78%  { transform: translateY(-7%) }
+  100% { transform: translateY(0);     opacity: 1 }
+}
+
+@keyframes cartIn {
+  0%   { transform: translateY(-150px) rotate(-2deg); opacity: 0 }
+  65%  { transform: translateY(10px);                 opacity: 1 }
+  100% { transform: translateY(0) }
+}
+
+@keyframes flash { 0% { opacity: .95 } 100% { opacity: 0 } }
+
+@keyframes gradDevelop {
+  0%   { filter: brightness(2.6) contrast(.55) sepia(.4); opacity: .2; transform: scale(1.06) }
+  35%  { opacity: 1 }
+  100% { filter: none; opacity: 1; transform: scale(1) }
+}
+
+@keyframes camBob { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+
+@keyframes stripeMove { 0% { background-position: 0 0 } 100% { background-position: 200% 0 } }
+
+/* Center film strip: vertical bar with two columns of sprocket holes. */
+.laura-center-strip {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 36px;
+  bottom: 30px;
+  width: 54px;
+  background: #141009;
+  z-index: 0;
+}
+.laura-center-strip::before,
+.laura-center-strip::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: repeating-linear-gradient(#ECE0C4 0 11px, transparent 11px 28px);
+  border-radius: 2px;
+}
+.laura-center-strip::before { left: 7px; }
+.laura-center-strip::after  { right: 7px; }
+
+/* Arcade "brick" buttons — :hover / :active press states can't be inlined. */
+.laura-btn-start {
+  font-family: 'VT323', monospace;
+  font-size: 26px;
+  letter-spacing: 3px;
+  color: #3a2400;
+  background: linear-gradient(#ffd34d, #f2a91f);
+  border: none;
+  border-radius: 8px;
+  padding: 16px 34px 20px;
+  cursor: pointer;
+  box-shadow: 0 8px 0 #9c6a0e, 0 14px 22px rgba(0, 0, 0, .45);
+  transform: translateY(0);
+  transition: transform .07s, box-shadow .07s, filter .1s;
+}
+.laura-btn-start:hover { filter: brightness(1.06); }
+.laura-btn-start:active { box-shadow: 0 3px 0 #9c6a0e; transform: translateY(5px); }
+
+.laura-btn-replay {
+  font-family: 'VT323', monospace;
+  font-size: 21px;
+  letter-spacing: 2px;
+  color: #3a2400;
+  background: linear-gradient(#ffd34d, #f2a91f);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 26px 15px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #9c6a0e, 0 12px 20px rgba(0, 0, 0, .4);
+  transform: translateY(0);
+  transition: transform .07s, box-shadow .07s, filter .1s;
+}
+.laura-btn-replay:hover { filter: brightness(1.05); }
+.laura-btn-replay:active { box-shadow: 0 2px 0 #9c6a0e; transform: translateY(4px); }
+
+/* Respect reduced-motion: kill the looping/ambient animations.
+   Phase transitions are also gated in JS so content never stays hidden. */
+@media (prefers-reduced-motion: reduce) {
+  .laura-btn-start,
+  .laura-btn-replay { transition: none; }
+}
