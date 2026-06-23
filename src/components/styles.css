@@ -117,3 +117,40 @@
 .transition-out {
   animation: fade-out 0.25s ease-out forwards;
 }
+
+.my-nav-list {
+  display: flex;
+  list-style: none;
+}
+
+.my-nav-item {
+  position: relative; /* Important for positioning the megamenu */
+}
+
+.my-megamenu {
+  display: block; /* Make visible when open */
+  position: absolute;
+  top: 100%; /* Position below the nav item */
+  left: 0;
+  width: 100%; /* Full viewport width */
+  max-width: 1536px; /* Or your design's max-width */
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 40; /* Below the navbar, above the overlay */
+  background-color: white;
+  border-top: 1px solid #e2e8f0; /* Example border from Art Basel */
+}
+
+/* Overlay (if you want to add it) */
+.megamenu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 30; /* Below the megamenu content */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align content to the top */
+}

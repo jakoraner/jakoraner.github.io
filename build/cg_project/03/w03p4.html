@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W03P4</title>
+    <!-- Include Angel's WebGL utility scripts -->
+    <script src="../angelCommon/webgl-utils.js"></script>
+    <script src="../angelCommon/initShaders.js"></script>
+    <script src="../angelCommon/MV.js"></script>
+
+    <!-- Vertex Shader -->
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 vPosition;
+        uniform mat4 uModelViewMatrix;
+        uniform mat4 uProjectionMatrix;
+        void main() {
+            gl_Position = uProjectionMatrix * uModelViewMatrix * vPosition;
+        }
+    </script>
+
+    <!-- Fragment Shader -->
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec4 uColor;
+        void main() {
+            gl_FragColor = uColor;
+        }
+    </script>
+</head>
+<body>
+    <canvas id="gl" width="512" height="512">
+        Your browser doesn't support the HTML5 <code>&lt;canvas&gt;</code> element.
+    </canvas>
+
+    <!-- Controls -->
+    <div>
+        <button id="roll-left">Roll Left</button>
+        <button id="roll-right">Roll Right</button>
+    </div>
+
+    <!-- Include the JavaScript file -->
+    <script src="w03p4.js"></script>
+</body>
+</html>

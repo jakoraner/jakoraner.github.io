@@ -1,4 +1,3 @@
-// LandingPage.js
 import React, { useEffect, useRef } from 'react';
 import Navbar from './Navbar';
 import './styles.css';
@@ -17,7 +16,8 @@ const LandingPage = () => {
       if (image) {
         const imagePosition = image.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
-        if (imagePosition < windowHeight - 100) { // Trigger earlier for smoother animation
+        if (imagePosition < windowHeight - 100) {
+          // Trigger earlier for smoother animation
           image.classList.add('bounce');
         } else {
           image.classList.remove('bounce');
@@ -63,10 +63,11 @@ const LandingPage = () => {
                 About Me
               </h2>
               <p className="text-lg sm:text-xl leading-relaxed text-gray-600 text-left">
-                I'm Jacob, a researcher and student specializing in artificial intelligence and
-                machine learning, with a focus on the training of large language models. I am
-                currently pursuing a master's degree in Human-Centered AI at the Technical University
-                of Denmark.
+                I'm Jacob, a researcher and student specializing in artificial
+                intelligence and machine learning, with a focus on the training
+                of large language models. I am currently pursuing a master's
+                degree in Human-Centered AI at the Technical University of
+                Denmark.
               </p>
             </div>
 
@@ -102,13 +103,15 @@ const LandingPage = () => {
             <ul className="text-gray-800 space-y-8">
               <li className="bg-white shadow-md rounded-md p-6">
                 <h3 className="text-xl sm:text-2xl font-semibold mb-2">
-                  Generating Software Tests for Mobile Applications Using Fine-Tuned Large Language Models
+                  Generating Software Tests for Mobile Applications Using
+                  Fine-Tuned Large Language Models
                 </h3>
                 <p className="mb-2">
                   <strong>Authors:</strong> Jacob Hoffmann, Demian Frister
                 </p>
                 <p className="mb-2">
-                  Presented at the 5th ACM/IEEE International Conference on Automation of Software Test (AST 2024)
+                  Presented at the 5th ACM/IEEE International Conference on
+                  Automation of Software Test (AST 2024)
                 </p>
                 <a
                   href="https://doi.org/10.1145/3644032.3644454"
@@ -135,41 +138,55 @@ const LandingPage = () => {
           <div className="space-y-8">
             {/* Job 1 */}
             <div className="bg-white shadow-md rounded-md p-6">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-2">Research Assistant</h3>
+              <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                Research Assistant
+              </h3>
               <p className="mb-2 italic text-gray-700">
-                Karlsruhe Institute of Technology (KIT), Institute AIFB (Oct 2023 – Present)
+                Karlsruhe Institute of Technology (KIT), Institute AIFB (Oct
+                2023 – Present)
               </p>
               <ul className="list-disc list-outside pl-5 space-y-2 text-gray-600 leading-relaxed">
                 <li>
-                  Co-authored and presented the paper “Generating Software Tests for Mobile Applications Using Fine-Tuned Large Language Models” as a Poster Abstract at ACM/IEEE’s AST 2024 in Lisbon
+                  Co-authored and presented the paper “Generating Software
+                  Tests for Mobile Applications Using Fine-Tuned Large Language
+                  Models” as a Poster Abstract at ACM/IEEE’s AST 2024 in Lisbon
                 </li>
                 <li>
-                  Independently led a project focused on creating synthetic datasets, utilizing large language models for data filtering and enhancement, contributing to improved fine-tuning techniques
+                  Independently led a project focused on creating synthetic
+                  datasets, utilizing large language models for data filtering
+                  and enhancement, contributing to improved fine-tuning
+                  techniques
                 </li>
                 <li>
-                  Played a key role in the development and optimization of the research group’s in-house LLM API
+                  Played a key role in the development and optimization of the
+                  research group’s in-house LLM API
                 </li>
                 <li>
-                  Authored an upcoming article for SIGS Datacom’s German Testing Magazine
+                  Authored an upcoming article for SIGS Datacom’s German Testing
+                  Magazine
                 </li>
               </ul>
             </div>
 
             {/* Job 2 */}
             <div className="bg-white shadow-md rounded-md p-6">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-2">Working Student</h3>
+              <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                Working Student
+              </h3>
               <p className="mb-2 italic text-gray-700">
-                Naturana International, Stuttgart, Germany (Jul 2021 – Jun 2022)
+                Naturana International, Stuttgart, Germany (Jul 2021 – Jun
+                2022)
               </p>
               <ul className="list-disc list-outside pl-5 space-y-2 text-gray-600 leading-relaxed">
+                <li>Led the technical launch of the Naturana brand on Zalando</li>
                 <li>
-                  Led the technical launch of the Naturana brand on Zalando
+                  Boosted online sales, achieving 25% of total online sales on
+                  Zalando through data-driven strategies
                 </li>
                 <li>
-                  Boosted online sales, achieving 25% of total online sales on Zalando through data-driven strategies
-                </li>
-                <li>
-                  Managed e-commerce strategies on the Shopify and Amazon platforms, implementing data analytics for performance tracking
+                  Managed e-commerce strategies on the Shopify and Amazon
+                  platforms, implementing data analytics for performance
+                  tracking
                 </li>
               </ul>
             </div>
@@ -182,10 +199,13 @@ const LandingPage = () => {
               </p>
               <ul className="list-disc list-outside pl-5 space-y-2 text-gray-600 leading-relaxed">
                 <li>
-                  Developed Outletcity Metzingen's omnichannel shopping app using Kotlin, enhancing the customer retail experience
+                  Developed Outletcity Metzingen's omnichannel shopping app
+                  using Kotlin, enhancing the customer retail experience
                 </li>
                 <li>
-                  Conducted user data analysis via Google Firebase and worked on product management tasks in an agile setting using Scrum and Jira
+                  Conducted user data analysis via Google Firebase and worked on
+                  product management tasks in an agile setting using Scrum and
+                  Jira
                 </li>
               </ul>
             </div>
@@ -210,14 +230,25 @@ const LandingPage = () => {
             </h2>
             <ul className="text-gray-800 space-y-8">
               <li className="bg-white shadow-md rounded-md p-6">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2">M.Sc. in Human-Centered AI</h3>
+                <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                  M.Sc. in Human-Centered AI
+                </h3>
                 <p className="mb-2 italic text-gray-700">
                   Technical University of Denmark (DTU) (2024 – Present)
                 </p>
                 <ul className="list-disc list-outside pl-5 space-y-2 text-gray-600 leading-relaxed">
-                  <li>Focusing on Machine Learning, Cognitive Science, and Computer Vision</li>
-                  <li>Comprehensive studies in Deep Learning, NLP, and Data Science</li>
-                  <li>Research Assistant at KIT, applying theoretical AI knowledge to real-world problems</li>
+                  <li>
+                    Focusing on Machine Learning, Cognitive Science, and
+                    Computer Vision
+                  </li>
+                  <li>
+                    Comprehensive studies in Deep Learning, NLP, and Data
+                    Science
+                  </li>
+                  <li>
+                    Research Assistant at KIT, applying theoretical AI
+                    knowledge to real-world problems
+                  </li>
                 </ul>
               </li>
 
@@ -230,10 +261,17 @@ const LandingPage = () => {
                 </p>
                 <ul className="list-disc list-outside pl-5 space-y-2 text-gray-600 leading-relaxed">
                   <li>
-                    Bachelor’s thesis on “Generating Software Tests for Mobile Applications Using Transformer Networks”
+                    Bachelor’s thesis on “Generating Software Tests for Mobile
+                    Applications Using Transformer Networks”
                   </li>
-                  <li>Seminar on AI in Robotic Systems, focusing on practical applications</li>
-                  <li>Specialization in AI, Machine Learning, and Applied Computer Science</li>
+                  <li>
+                    Seminar on AI in Robotic Systems, focusing on practical
+                    applications
+                  </li>
+                  <li>
+                    Specialization in AI, Machine Learning, and Applied
+                    Computer Science
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -244,7 +282,10 @@ const LandingPage = () => {
         <div className="w-full border-t border-gray-200"></div>
 
         {/* Languages Section */}
-        <section id="languages" className="max-w-6xl mx-auto px-4 py-16 bg-gray-50">
+        <section
+          id="languages"
+          className="max-w-6xl mx-auto px-4 py-16"
+        >
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-left">
             Languages
           </h2>

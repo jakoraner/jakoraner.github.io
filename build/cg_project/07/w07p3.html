@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W07P3</title>
+    <!-- Include Angel's WebGL utility scripts -->
+    <script src="../angelCommon/webgl-utils.js"></script>
+    <script src="../angelCommon/initShaders.js"></script>
+    <script src="../angelCommon/MV.js"></script>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        precision mediump float;  // Required precision specifier
+        precision mediump int;    // Declare precision for integers
+    
+        attribute vec4 vPosition;
+        attribute vec3 vNormal;
+        varying vec3 texCoord;
+    
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+        uniform mat4 modelMatrix;
+        uniform mat4 Mtex;
+        uniform int reflective;
+    
+        void main() {
+            if (reflective == 0) {
+                // For the background quad:
+                // Positions are already in clip space, so no projection is needed.
+                gl_Position = vPosition; 
+                
+                // Transform position using Mtex to get directions for the cube map
+                vec4 pos = Mtex * vPosition;
+                texCoord = pos.xyz;
+            } else {
+                // For the reflective sphere:
+                // Transform normally with modelViewProjection
+                gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+                
+                // Compute normal in world space
+                vec3 vNormalWorld = normalize(mat3(modelMatrix) * vNormal);
+                texCoord = vNormalWorld;
+            }
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        precision mediump int;    // Declare precision for integers
+    
+        varying vec3 texCoord;
+        uniform samplerCube texMap;
+        uniform vec3 eyePosition;
+        uniform mat4 modelMatrix;
+        uniform int reflective;
+    
+        void main() {
+            if (reflective == 0) {
+                // Background quad: use direction from Mtex directly
+                gl_FragColor = textureCube(texMap, texCoord);
+            } else {
+                // Reflective sphere
+                // N is the normal at the fragment in world space (passed from vertex shader)
+                vec3 N = normalize(texCoord);
+    
+                // Approximate the fragment position on the unit sphere: P ~ N
+                vec3 P = N;
+    
+                // Compute the view vector from eye to fragment
+                vec3 v = normalize(eyePosition - P);
+    
+                // Compute reflection direction
+                vec3 direction = reflect(-v, N);
+    
+                // Lookup environment map using the reflection direction
+                gl_FragColor = textureCube(texMap, direction);
+            }
+        }
+    </script>
+
+    <script type="text/javascript" src="w07p3.js"></script>
+</head>
+<body>
+    <canvas id="gl" width="512" height="512">
+        Your browser doesn't support the HTML5 <code>&lt;canvas&gt;</code> element.
+    </canvas>
+
+    <!-- Controls -->
+    <div>
+        <button id="toggle-orbit">Stop Orbiting</button>
+    </div>
+</body>
+</html>

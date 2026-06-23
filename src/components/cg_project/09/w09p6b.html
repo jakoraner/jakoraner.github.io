@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W09P6 - Improved Precision Shadow Mapping</title>
+    <!-- Include Angel's WebGL utility scripts -->
+    <script src="../angelCommon/webgl-utils.js"></script>
+    <script src="../angelCommon/initShaders.js"></script>
+    <script src="../angelCommon/MV.js"></script>
+    <!-- Include the OBJ parser -->
+    <script src="../OBJParser.js"></script>
+
+    <!-- Ground Vertex Shader -->
+    <script id="vertex-shader-ground" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute vec2 a_TexCoord;
+        varying vec2 v_TexCoord;
+
+        uniform mat4 u_MvpMatrixFromLight; // Matrix from light's point of view
+        varying vec4 v_PositionFromLight;
+
+        uniform mat4 u_ModelMatrix;
+        uniform mat4 u_ViewMatrix;
+        uniform mat4 u_ProjectionMatrix;
+
+        void main() {
+            gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+            v_TexCoord = a_TexCoord;
+            v_PositionFromLight = u_MvpMatrixFromLight * a_Position;
+        }
+    </script>
+
+    <script id="fragment-shader-ground" type="x-shader/x-fragment">
+        precision highp float;
+        varying vec2 v_TexCoord;
+        varying vec4 v_PositionFromLight;
+        
+        uniform sampler2D u_Sampler;
+        uniform sampler2D u_ShadowMap;
+        uniform vec2 u_TexelSize; // Add this uniform
+        
+        // Function to unpack depth from RGBA channels
+        float unpackDepth(const in vec4 rgbaDepth) {
+            const vec4 bitShift = vec4(
+                1.0,
+                1.0 / 256.0,
+                1.0 / (256.0 * 256.0),
+                1.0 / (256.0 * 256.0 * 256.0)
+            );
+            float depth = dot(rgbaDepth, bitShift);
+            return depth;
+        }
+        
+        void main() {
+            // Calculate shadow coordinate
+            vec3 shadowCoord = (v_PositionFromLight.xyz / v_PositionFromLight.w) / 2.0 + 0.5;
+        
+            float visibility = 1.0;
+        
+            // Early exit if outside shadow map bounds
+            if (shadowCoord.x < 0.0 || shadowCoord.x > 1.0 ||
+                shadowCoord.y < 0.0 || shadowCoord.y > 1.0) {
+                visibility = 1.0;
+            } else {
+                // Percentage-Closer Filtering (3x3 kernel)
+                float shadow = 0.0;
+                float samples = 0.0;
+        
+                for (int x = -1; x <= 1; x++) {
+                    for (int y = -1; y <= 1; y++) {
+                        vec2 offset = vec2(float(x), float(y)) * u_TexelSize;
+                        vec4 rgbaDepth = texture2D(u_ShadowMap, shadowCoord.xy + offset);
+                        float depthFromShadowMap = unpackDepth(rgbaDepth);
+        
+                        if (shadowCoord.z > depthFromShadowMap + 0.0015) {
+                            shadow += 0.0; // In shadow
+                        } else {
+                            shadow += 1.0; // Lit
+                        }
+                        samples += 1.0;
+                    }
+                }
+                visibility = shadow / samples;
+            }
+        
+            vec4 color = texture2D(u_Sampler, v_TexCoord);
+            gl_FragColor = vec4(color.rgb * visibility, color.a);
+        }
+    </script>
+
+    <!-- Vertex Shader for Teapot -->
+    <script id="vertex-shader-teapot" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        attribute vec4 a_Normal;
+        attribute vec4 a_Color;
+
+        uniform mat4 u_ModelMatrix;
+        uniform mat4 u_ViewMatrix;
+        uniform mat4 u_ProjectionMatrix;
+        uniform mat4 u_NormalMatrix;
+
+        uniform mat4 u_MvpMatrixFromLight; // Matrix from light's point of view
+        varying vec4 v_PositionFromLight;
+
+        varying vec3 v_Normal;
+        varying vec3 v_Position;
+        varying vec4 v_Color;
+
+        void main() {
+            gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+            v_Position = vec3(u_ModelMatrix * a_Position);
+            v_Normal = normalize(vec3(u_NormalMatrix * a_Normal));
+            v_Color = a_Color;
+            v_PositionFromLight = u_MvpMatrixFromLight * a_Position;
+        }
+    </script>
+
+    <script id="fragment-shader-teapot" type="x-shader/x-fragment">
+        precision highp float;
+
+        varying vec3 v_Normal;
+        varying vec3 v_Position;
+        varying vec4 v_Color;
+        varying vec4 v_PositionFromLight;
+        
+        uniform vec3 u_LightPosition;
+        uniform vec3 u_LightColor;
+        uniform vec3 u_AmbientLight;
+        uniform sampler2D u_ShadowMap;
+        uniform vec2 u_TexelSize; // Add this uniform
+        
+        uniform vec3 u_SpecularColor;
+        uniform float u_Shininess;
+        
+        // Function to unpack depth from RGBA channels
+        float unpackDepth(const in vec4 rgbaDepth) {
+            const vec4 bitShift = vec4(
+                1.0,
+                1.0 / 256.0,
+                1.0 / (256.0 * 256.0),
+                1.0 / (256.0 * 256.0 * 256.0)
+            );
+            float depth = dot(rgbaDepth, bitShift);
+            return depth;
+        }
+        
+        void main() {
+            // Normalize the normal vector
+            vec3 normal = normalize(v_Normal);
+        
+            // Compute the light direction vector
+            vec3 lightDirection = normalize(u_LightPosition - v_Position);
+        
+            // Compute the view direction vector
+            vec3 viewDirection = normalize(-v_Position);
+        
+            // Compute the reflection direction vector
+            vec3 reflectionDirection = reflect(-lightDirection, normal);
+        
+            // Compute ambient reflection
+            vec3 ambient = u_AmbientLight * v_Color.rgb;
+        
+            // Compute diffuse reflection
+            float diff = max(dot(normal, lightDirection), 0.0);
+            vec3 diffuse = u_LightColor * diff * v_Color.rgb;
+        
+            // Compute specular reflection
+            float spec = 0.0;
+            if (diff > 0.0)
+                spec = pow(max(dot(reflectionDirection, viewDirection), 0.0), u_Shininess);
+            vec3 specular = u_LightColor * spec * u_SpecularColor;
+        
+            // Shadow calculation
+            vec3 shadowCoord = (v_PositionFromLight.xyz / v_PositionFromLight.w) / 2.0 + 0.5;
+        
+            float visibility = 1.0;
+        
+            // Early exit if outside shadow map bounds
+            if (shadowCoord.x < 0.0 || shadowCoord.x > 1.0 ||
+                shadowCoord.y < 0.0 || shadowCoord.y > 1.0) {
+                visibility = 1.0;
+            } else {
+                // Percentage-Closer Filtering (3x3 kernel)
+                float shadow = 0.0;
+                float samples = 0.0;
+        
+                for (int x = -1; x <= 1; x++) {
+                    for (int y = -1; y <= 1; y++) {
+                        vec2 offset = vec2(float(x), float(y)) * u_TexelSize;
+                        vec4 rgbaDepth = texture2D(u_ShadowMap, shadowCoord.xy + offset);
+                        float depthFromShadowMap = unpackDepth(rgbaDepth);
+        
+                        if (shadowCoord.z > depthFromShadowMap + 0.0015) {
+                            shadow += 0.0; // In shadow
+                        } else {
+                            shadow += 1.0; // Lit
+                        }
+                        samples += 1.0;
+                    }
+                }
+                visibility = shadow / samples;
+            }
+        
+            // Sum all components
+            vec3 finalColor = (ambient + diffuse + specular) * visibility;
+        
+            gl_FragColor = vec4(finalColor, v_Color.a);
+        }
+    </script>
+
+    <!-- Shadow Map Vertex Shader (unchanged) -->
+    <script id="vertex-shader-shadow-map" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+
+        uniform mat4 u_ModelMatrix;
+        uniform mat4 u_ViewMatrix;
+        uniform mat4 u_ProjectionMatrix;
+
+        varying vec4 v_PositionFromLight;
+
+        void main() {
+            gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+            v_PositionFromLight = gl_Position;
+        }
+    </script>
+
+    <!-- Shadow Map Fragment Shader (with depth encoding) -->
+    <script id="fragment-shader-shadow-map" type="x-shader/x-fragment">
+        precision highp float;
+    
+        varying vec4 v_PositionFromLight;
+    
+        void main() {
+            // Encode the depth value into RGBA channels
+            float depth = gl_FragCoord.z;
+    
+            const vec4 bitShift = vec4(
+                1.0,
+                256.0,
+                256.0 * 256.0,
+                256.0 * 256.0 * 256.0
+            );
+            const vec4 bitMask = vec4(
+                1.0 / 256.0,
+                1.0 / 256.0,
+                1.0 / 256.0,
+                0.0
+            );
+    
+            vec4 rgbaDepth = fract(depth * bitShift);
+            rgbaDepth -= rgbaDepth.gbaa * bitMask;
+    
+            gl_FragColor = rgbaDepth;
+        }
+    </script>
+
+    <!-- Include your custom script -->
+    <script type="text/javascript" src="w09p6b.js"></script>
+</head>
+<body>
+    <canvas id="gl" width="512" height="512">
+        Your browser doesn't support the HTML5 <code>&lt;canvas&gt;</code> element.
+    </canvas>
+    <br>
+    <button id="toggle-light">Toggle Light Circulation</button>
+    <button id="toggle-motion">Stop Teapot Motion</button>
+</body>
+</html>

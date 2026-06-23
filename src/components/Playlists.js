@@ -108,7 +108,7 @@ const Playlists = () => {
             Playlists
           </h2>
           <p className="mb-12 text-xl max-w-2xl mx-auto">
-            Dive into my favorite tunes for any vibe!
+            My favorite tracks for any vibe!
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {playlistData.map((playlist, index) => (
