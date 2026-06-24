@@ -25,6 +25,11 @@ const INTRO_STYLE = 'crt';      // 'crt' | 'cartridge'
 const PHOTO_STYLE = 'polaroid'; // 'polaroid' | 'filmstrip'
 const HUMOR = 'warm';           // 'goofy' | 'warm' | 'subtle'
 
+// localStorage key for the live graduation capture (last frame). Bump the
+// version suffix to reset the slot back to its empty "tap to add" state so the
+// real photo can be taken fresh at the bachelor graduation.
+const GRAD_PHOTO_KEY = 'laura-grad-photo-2026-06';
+
 // ── Boot sequence text ───────────────────────────────────────────────────────
 const GREEN = '#86d36b';
 const RED = '#ff5a4d';
@@ -191,7 +196,7 @@ export default function LauraTimeline() {
   const [revealed, setRevealed] = useState({});
   const [gradPhoto, setGradPhoto] = useState(() => {
     try {
-      return localStorage.getItem('laura-grad-photo') || '';
+      return localStorage.getItem(GRAD_PHOTO_KEY) || '';
     } catch (_) {
       return '';
     }
@@ -250,7 +255,7 @@ export default function LauraTimeline() {
       const reader = new FileReader();
       reader.onload = () => {
         try {
-          localStorage.setItem('laura-grad-photo', reader.result);
+          localStorage.setItem(GRAD_PHOTO_KEY, reader.result);
         } catch (_) {
           /* localStorage may be full or blocked — keep the in-memory copy */
         }
