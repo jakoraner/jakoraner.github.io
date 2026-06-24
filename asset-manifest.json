@@ -1,19 +1,27 @@
 {
   "files": {
     "main.css": "/static/css/main.89c1d2d6.css",
-    "main.js": "/static/js/main.c17945d6.js",
+    "main.js": "/static/js/main.682bb142.js",
     "static/media/IMG_6674.jpg": "/static/media/IMG_6674.da3107bc7029c0240511.jpg",
     "static/media/night-leather.jpg": "/static/media/night-leather.b19f03a959826efb0e9b.jpg",
     "static/media/20240921_TQD001.jpeg": "/static/media/20240921_TQD001.2f34bef063c20db7c373.jpeg",
     "static/media/IMG_1671-3.jpg": "/static/media/IMG_1671-3.ce68612cb6a296129f34.jpg",
+    "static/media/cph-flying.jpg": "/static/media/cph-flying.28e079a3eaa0ddff86b5.jpg",
+    "static/media/cph-bridge.jpg": "/static/media/cph-bridge.6572f3f757fa47ca549d.jpg",
+    "static/media/cph-tourists.jpg": "/static/media/cph-tourists.47ba2fa84c32e814e584.jpg",
+    "static/media/istanbul-2.jpg": "/static/media/istanbul-2.1c832842bfd7b3f8d19a.jpg",
+    "static/media/vietnam-plane.jpg": "/static/media/vietnam-plane.14efaa90f6bf59e9ffd4.jpg",
+    "static/media/istanbul-1.jpg": "/static/media/istanbul-1.d309a306ed9ccfa671dc.jpg",
     "static/media/christmas.jpg": "/static/media/christmas.0df946efac41be903bf5.jpg",
+    "static/media/who-is-older.jpg": "/static/media/who-is-older.04932c14296bee1f8956.jpg",
     "static/media/park.jpg": "/static/media/park.e6ff714018dd9131d7cf.jpg",
+    "static/media/first-date.jpg": "/static/media/first-date.7b70219a02b43c0577a6.jpg",
     "index.html": "/index.html",
     "main.89c1d2d6.css.map": "/static/css/main.89c1d2d6.css.map",
-    "main.c17945d6.js.map": "/static/js/main.c17945d6.js.map"
+    "main.682bb142.js.map": "/static/js/main.682bb142.js.map"
   },
   "entrypoints": [
     "static/css/main.89c1d2d6.css",
-    "static/js/main.c17945d6.js"
+    "static/js/main.682bb142.js"
   ]
 }
