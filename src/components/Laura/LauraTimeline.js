@@ -8,9 +8,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './laura.css';
+import firstDatePhoto from '../../assets/laura/first-date.jpg';
 import parkPhoto from '../../assets/laura/park.jpg';
 import nightLeatherPhoto from '../../assets/laura/night-leather.jpg';
 import christmasPhoto from '../../assets/laura/christmas.jpg';
+import touristsPhoto from '../../assets/laura/cph-tourists.jpg';
+import bridgePhoto from '../../assets/laura/cph-bridge.jpg';
+import flyingPhoto from '../../assets/laura/cph-flying.jpg';
+import istanbul1Photo from '../../assets/laura/istanbul-1.jpg';
+import istanbul2Photo from '../../assets/laura/istanbul-2.jpg';
+import vietnamPhoto from '../../assets/laura/vietnam-plane.jpg';
+import olderPhoto from '../../assets/laura/who-is-older.jpg';
 
 // ── Final design choices (the handoff's three "design explorations") ─────────
 const INTRO_STYLE = 'crt';      // 'crt' | 'cartridge'
@@ -42,13 +50,40 @@ const BOOT = [
 //
 // To fill an empty slot later: import the photo at the top, then change that
 // milestone to  { ..., kind: 'photo', src: yourImport }  — done.
+// Ordered chronologically. Dates on the camera photos are their real EXIF
+// capture dates; the three originals (park/night-leather/christmas), the two
+// placeholders, and the graduation frame keep their narrative dates.
 const MILES = [
   {
-    date: "'25 07 05", kind: 'slot', slotId: 'm-first', title: 'FIRST DATE — KØDBYEN',
+    date: "'25 07 05", kind: 'photo', src: firstDatePhoto, title: 'FIRST DATE — KØDBYEN',
     caps: {
       goofy: 'Kødbyen, 5 July. Two idiots, one great idea. 10/10, would repeat.',
       warm: 'Our first date in Kødbyen — before it was anything, it was a maybe. Best maybe of my life.',
       subtle: 'Kødbyen, 05 July 2025. Where it all quietly began.',
+    },
+  },
+  {
+    date: "'25 08 30", kind: 'photo', src: touristsPhoto, title: 'TOURISTS IN OUR OWN CITY',
+    caps: {
+      goofy: 'Full tourist mode: matching squint, zero chill, one perfect harbor.',
+      warm: 'Nyhavn, sunshine, and you — falling for our own city all over again.',
+      subtle: 'Nyhavn. Home never looked better.',
+    },
+  },
+  {
+    date: "'25 08 30", kind: 'photo', src: bridgePhoto, title: 'ON THE BRIDGE',
+    caps: {
+      goofy: 'Stopped the bike mid-bridge just to stare at you. Worth the traffic.',
+      warm: 'The whole harbor behind us, and I still only had eyes for you.',
+      subtle: 'Copenhagen from the bridge, together.',
+    },
+  },
+  {
+    date: "'25 09 14", kind: 'photo', src: olderPhoto, title: 'FOR THE RECORD',
+    caps: {
+      goofy: 'The face-scanner called me 33 and you 24. Science has spoken. Rude.',
+      warm: "A machine guessed me 33 and you 24 — I'll never hear the end of it, and I don't mind.",
+      subtle: 'The machine had opinions about our ages.',
     },
   },
   {
@@ -68,6 +103,22 @@ const MILES = [
     },
   },
   {
+    date: "'25 10 14", kind: 'photo', src: istanbul1Photo, title: 'ISTANBUL, UP CLOSE',
+    caps: {
+      goofy: 'Two faces, one phone, zero personal space. Istanbul edition.',
+      warm: 'Cheek to cheek somewhere in Istanbul. My favorite kind of lost.',
+      subtle: 'Istanbul, as close as it gets.',
+    },
+  },
+  {
+    date: "'25 10 15", kind: 'photo', src: istanbul2Photo, title: 'UNDER THE DOMES',
+    caps: {
+      goofy: 'We came for the history, stayed for the selfies.',
+      warm: 'Under impossible ceilings, holding your hand. Istanbul with you.',
+      subtle: 'Istanbul. Quiet awe, side by side.',
+    },
+  },
+  {
     date: "'25 12 24", kind: 'photo', src: christmasPhoto, title: 'FIRST CHRISTMAS',
     caps: {
       goofy: 'She got the rings. I got the honor of holding the camera.',
@@ -76,11 +127,19 @@ const MILES = [
     },
   },
   {
-    date: "'26 · 03", kind: 'slot', slotId: 'm-everyday', title: 'A REGULAR TUESDAY',
+    date: "'26 01 30", kind: 'photo', src: vietnamPhoto, title: 'VIETNAM-BOUND',
     caps: {
-      goofy: 'No occasion. Just two weirdos being unreasonably happy.',
-      warm: 'Turns out most of the magic was just ordinary days with you.',
-      subtle: 'An ordinary day worth keeping forever.',
+      goofy: 'Pre-takeoff selfie: certified plane goofballs, Vietnam-bound.',
+      warm: 'Two seats, one big adventure — grinning the whole way to Vietnam.',
+      subtle: 'On our way to Vietnam.',
+    },
+  },
+  {
+    date: "'26 06 07", kind: 'photo', src: flyingPhoto, title: 'FLYING AROUND COPENHAGEN',
+    caps: {
+      goofy: 'Gravity? Never met her. Copenhagen parkour, sort of.',
+      warm: 'Caught mid-air, mid-laugh. This is what you do to me.',
+      subtle: 'Off the ground, somewhere in Copenhagen.',
     },
   },
   {
@@ -272,6 +331,7 @@ export default function LauraTimeline() {
 
   const revealedFrames = Object.keys(revealed).map(Number);
   const counterText = String(revealedFrames.length ? Math.max(...revealedFrames) : 0).padStart(2, '0');
+  const counterTotal = String(MILES.length).padStart(2, '0');
 
   // Inner content of a photo area (image / placeholder / live grad capture) + date stamp.
   const renderPhotoInner = (m) => {
@@ -563,7 +623,7 @@ export default function LauraTimeline() {
       >
         <span style={{ fontFamily: "'VT323',monospace", color: '#c77e12', fontSize: '13px', letterSpacing: '2px' }}>EXP</span>
         <span style={{ fontFamily: "'VT323',monospace", color: '#ff7a18', fontSize: '30px', lineHeight: 1, textShadow: '0 0 10px rgba(255,120,20,.7)' }}>
-          {counterText}/06
+          {counterText}/{counterTotal}
         </span>
       </div>
 
